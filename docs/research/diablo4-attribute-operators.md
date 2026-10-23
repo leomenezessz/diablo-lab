@@ -52,3 +52,17 @@ Exemplos de identificadores: `Strength` (4), `Intelligence` (5), `Willpower` (6)
 - Investigar scripts, definições e histórico de extração.
 - Registrar evidências, hipóteses e confiança separadamente.
 - Não integrar dados ao backend nem alterar a aplicação nesta fase.
+
+## Descoberta adicional: diferença de um registro (confirmada)
+A lista possui dois registros com o mesmo nome `Multiplicative_Damage_Bonus_Percent_To_Weakened`:
+- `eAttrib=742`, `eParameterType=-1`, `eAttributeOperator=7`;
+- `eAttrib=743`, `eParameterType=5`, `eAttributeOperator=7`.
+
+O objeto `attributes.json` é indexado por nome, portanto não pode representar ambas as entradas como chaves distintas. Isso **explica a diferença de contagem** (1.394 contra 1.393) e revela risco de perda de informação ao usar o objeto indexado por nome como fonte canônica. Preferir a lista e preservar `eAttrib` como identificador, sujeito a validação de unicidade.
+
+## Pistas sobre operadores (hipóteses, não enumeração validada)
+- Código 6 aparece em `Resource_Cost_Reduction_Percent` e `Power_Cooldown_Reduction_Percent`.
+- Código 7 aparece em `Multiplicative_Damage_Bonus_Percent_To_Weakened` e `Debug_Damage_Percent_Multiply`.
+- Código 0 aparece em `Strength_Total` com fórmula explícita de soma e multiplicação, o que demonstra que **o código não é simplesmente o operador matemático escrito na fórmula**.
+
+Esses agrupamentos sugerem semântica de agregação, mas não permitem afirmar qual é a operação de cada código sem a definição original ou testes adicionais.
