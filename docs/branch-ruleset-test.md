@@ -1,7 +1,7 @@
 # Branch ruleset CI test
 
-This PR intentionally contains a whitespace error to verify that the `Validate static site` check fails and that the `main` ruleset prevents merging.
+This PR tests that the `Validate static site` check is required by the `main` branch ruleset.
 
-Expected: validation fails; merge is blocked.  
+The intentionally introduced trailing whitespace caused validation to fail and blocked merging.
 
-Remove the trailing spaces on the previous line after confirming the protection works.
+The whitespace has now been removed. Expected: validation passes and merging becomes available.
