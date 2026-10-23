@@ -104,3 +104,23 @@ Fontes: [WiseOwl AttributeNames](https://github.com/WiseOwlSoftware/WiseOwl.Casc
 - Só depois vincular `FormulaGbid` / `InlineFormula` e estudar os operadores.
 
 Contagens do dataset revalidadas nesta rodada: 1.394 entradas na lista, 1.393 chaves no objeto, 71 fórmulas não nulas e distribuição dos 12 operadores idêntica à tabela acima.
+
+## Parecer de encerramento da pesquisa exploratória (23/10/2026)
+
+**Decisão:** encerrar o levantamento exploratório de fontes e riscos de modelagem, não a validação completa do pipeline de afixos. Esta PR é documental.
+
+### Achados
+- Preferir attributeList.json: o objeto por nome perde a distinção entre os IDs 742 e 743.
+- Preservar build, proveniência, namespace e parâmetro na identidade dos efeitos.
+- WiseOwl documenta AttributeId, ParamPlus12, FormulaGbid, InlineFormula e StaticValues, mas isso não comprova equivalência de IDs entre builds.
+- Os 12 códigos eAttributeOperator estão catalogados; sua semântica matemática segue desconhecida.
+
+### Validações pendentes (não executadas nesta PR)
+1. Congelar uma build e registrar checksums de amostras brutas.
+2. Testar um afixo comum: atributo, parâmetro, fórmula e intervalo.
+3. Testar um afixo com múltiplos modificadores, preservando todos os efeitos.
+4. Testar um afixo com InlineFormula ou StaticValues e sentinelas ausentes.
+5. Comparar nomes localizados e registrar divergências.
+
+### Condição de aprovação
+Aprovar esta PR significa aceitar documentação de pesquisa exploratória com limites explícitos. **Não significa aprovar normalizador, resolvedor de fórmulas, equivalência entre versões ou motor de dano.** Nenhum teste automatizado foi executado nesta PR. A implementação e a validação prática exigem trabalho separado.
