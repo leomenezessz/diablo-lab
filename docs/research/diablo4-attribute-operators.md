@@ -74,3 +74,33 @@ Esses agrupamentos sugerem semântica de agregação, mas não permitem afirmar 
 - O README descreve `DT_SNO` e `DT_SNONAME` como referências a arquivos; `DT_GBID` como referência a elemento específico de um array em arquivo de game balance.
 
 Fontes: [LICENSE](https://github.com/DiabloTools/d4data/blob/master/LICENSE), [README](https://github.com/DiabloTools/d4data/blob/master/readme.md), [buildVersion.txt](https://github.com/DiabloTools/d4data/blob/master/buildVersion.txt).
+
+## Cruzamento entre DiabloTools e WiseOwl (23/10/2026)
+
+**Resultado: não é seguro fazer join por ID entre versões sem uma camada de reconciliação.**
+
+O WiseOwl documenta exemplos para build `3.1.1.72836` (temporada 14), enquanto o `buildVersion.txt` do DiabloTools consultado declara `3.2.3.73883`. Comparações pontuais com o `attributeList.json`:
+
+| ID | WiseOwl (nome apresentado) | DiabloTools (nome interno) | Situação |
+| --- | --- | --- | --- |
+| 9 | Strength | Strength_Core | Semântica relacionada, não idêntica |
+| 133 | Maximum Life | Flat_Hitpoints_Max_Bonus | Possível relação; requer confirmação |
+| 142 | Maximum Life | Hitpoints_Max_Percent_Bonus | Divergência de granularidade |
+| 275 | Critical Strike Chance | Crit_Percent_Bonus | Compatível conceitualmente, não comprovado como equivalência |
+| 481 | Armor (pré-S14, conforme WiseOwl) | Core_Stat_Armor_Bonus | Divergência explícita |
+| 482 | Armor (S14) | Armor_Percent | Divergência de descrição/granularidade |
+| 953 | Damage to Elites | Damage_Percent_Bonus_Vs_Elites | Compatível conceitualmente, não comprovado como equivalência |
+
+O WiseOwl documenta ainda dois espaços de identificadores: IDs positivos para `eAttribute` do motor e IDs com bit alto ligado para `DataAttributes` (tabela SNO 1907204). Não usar valor absoluto de IDs negativos. A identidade de um efeito de afixo inclui `(AttributeId, ParamPlus12)`; o parâmetro pode representar elemento ou tag de habilidade, e `0xFFFFFFFF` é sentinela de ausência. Para magnitudes, o WiseOwl distingue `FormulaGbid` (tabela `AttributeFormulas`, SNO 201912), `InlineFormula` e `StaticValues`. Portanto, **identidade do atributo e cálculo do valor são problemas diferentes**.
+
+**Limite da evidência:** estes são exemplos publicados na documentação e registros do dataset; ainda não cruzamos um mesmo registro bruto de `AffixDefinition` nas duas fontes, nem validamos equivalência entre versões.
+
+Fontes: [WiseOwl AttributeNames](https://github.com/WiseOwlSoftware/WiseOwl.Casc/blob/main/docs/api/WiseOwl.Casc.Diablo4/WiseOwl.Casc.Diablo4/AttributeNames.md), [WiseOwl AffixEffect](https://github.com/WiseOwlSoftware/WiseOwl.Casc/blob/main/docs/api/WiseOwl.Casc.Diablo4/WiseOwl.Casc.Diablo4/AffixEffect.md), [DiabloTools attributeList](https://github.com/DiabloTools/d4data/blob/master/attributeList.json).
+
+### Próxima fronteira
+- Obter amostras brutas versionadas de afixos e atributos da **mesma build**.
+- Validar `AttributeId`, `ParamPlus12` e nomes localizados em conjunto.
+- Investigar os dois namespaces e mudanças de ordinal entre builds.
+- Só depois vincular `FormulaGbid` / `InlineFormula` e estudar os operadores.
+
+Contagens do dataset revalidadas nesta rodada: 1.394 entradas na lista, 1.393 chaves no objeto, 71 fórmulas não nulas e distribuição dos 12 operadores idêntica à tabela acima.
