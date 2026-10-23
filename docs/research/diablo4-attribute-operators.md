@@ -66,3 +66,11 @@ O objeto `attributes.json` é indexado por nome, portanto não pode representar 
 - Código 0 aparece em `Strength_Total` com fórmula explícita de soma e multiplicação, o que demonstra que **o código não é simplesmente o operador matemático escrito na fórmula**.
 
 Esses agrupamentos sugerem semântica de agregação, mas não permitem afirmar qual é a operação de cada código sem a definição original ou testes adicionais.
+
+## Proveniência e licenciamento (verificação adicional)
+- `buildVersion.txt` no repositório consultado contém **`3.2.3.73883`**. Registrar essa string como versão declarada pelo dataset, **sem presumir equivalência com a versão comercial/temporada atual**.
+- O repositório possui um arquivo `LICENSE` com licença **MIT**, copyright 2023 blizzhackers.
+- O próprio `readme.md` ressalva que os **assets diretamente extraídos do jogo continuam sendo propriedade da Blizzard**. Portanto, a licença MIT do código do repositório não é autorização irrestrita para redistribuir assets do jogo.
+- O README descreve `DT_SNO` e `DT_SNONAME` como referências a arquivos; `DT_GBID` como referência a elemento específico de um array em arquivo de game balance.
+
+Fontes: [LICENSE](https://github.com/DiabloTools/d4data/blob/master/LICENSE), [README](https://github.com/DiabloTools/d4data/blob/master/readme.md), [buildVersion.txt](https://github.com/DiabloTools/d4data/blob/master/buildVersion.txt).
