@@ -26,8 +26,16 @@ jobs:
           test -s index.html
           grep -qi '<html' index.html
           grep -qi '</html>' index.html
-      - name: Check whitespace errors
-        run: git diff --check HEAD^
+      - name: Check whitespace errors in pull request changes
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          git diff --check "$BASE_SHA" HEAD
+      - name: Check whitespace errors on main
+        if: github.event_name != 'pull_request'
+        run: git diff --check HEAD^ HEAD
 
   deploy:
     name: Deploy to GitHub Pages
